@@ -6,6 +6,6 @@ import 'package:tadmon/core/service/service_locator.dart';
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
   ServicesLocator().init();
-  runApp(const TadamonTask());
+  runApp(const RecipeTask());
 }
 
