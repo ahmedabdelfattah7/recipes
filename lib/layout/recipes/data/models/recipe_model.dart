@@ -2,7 +2,9 @@ import 'package:tadmon/layout/recipes/domain/entities/recipe.dart';
 
 
 class RecipeModel extends Recipe {
-  const RecipeModel({
+  bool isFavorite;
+
+  RecipeModel({
     required String id,
     required String name,
     required String image,
@@ -26,6 +28,7 @@ class RecipeModel extends Recipe {
     required List<String> weeks,
     required List<String> deliverableIngredients,
     required List<String> undeliverableIngredients,
+    this.isFavorite = false, // Initialize as not favorite by default
   }) : super(
     id: id,
     name: name,
@@ -77,8 +80,10 @@ class RecipeModel extends Recipe {
       weeks: List<String>.from(json['weeks'] ?? []),
       deliverableIngredients: List<String>.from(json['deliverable_ingredients'] ?? []),
       undeliverableIngredients: List<String>.from(json['undeliverable_ingredients'] ?? []),
+      isFavorite: json['isFavorite'] ?? false,
     );
   }
 }
+
 
 

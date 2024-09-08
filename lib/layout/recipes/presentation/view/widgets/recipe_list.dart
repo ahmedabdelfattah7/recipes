@@ -14,7 +14,7 @@ class RecipeListWidget extends StatelessWidget {
       width: double.infinity,
       decoration: BoxDecoration(
         color: ColorCode.white,
-        border: Border.all(color: ColorCode.grey41, width: 1),
+        border: Border.all(color: ColorCode.borderGrey, width: 1),
         borderRadius: BorderRadius.circular(10),
       ),
       child: Row(
@@ -42,7 +42,7 @@ class RecipeListWidget extends StatelessWidget {
                     style: GoogleFonts.montserrat(
                       fontSize: 14,
                       fontWeight: FontWeight.w600,
-                      color: ColorCode.black8,
+                      color: ColorCode.titleblack,
                     ),
                   ),
                   const SizedBox(height: 10),
@@ -53,7 +53,7 @@ class RecipeListWidget extends StatelessWidget {
                     style: GoogleFonts.montserrat(
                       fontSize: 14,
                       fontWeight: FontWeight.w400,
-                      color: ColorCode.pink2,
+                      color: ColorCode.primary,
                     ),
                   ),
                 ],

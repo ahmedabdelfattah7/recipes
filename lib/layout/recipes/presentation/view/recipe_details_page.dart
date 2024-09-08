@@ -3,24 +3,27 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:tadmon/core/service/service_locator.dart';
-import 'package:tadmon/core/utils/colors.dart';
 import 'package:tadmon/core/utils/enums.dart';
 import 'package:tadmon/layout/recipes/presentation/bloc/recipe_bloc.dart';
 import 'package:tadmon/layout/recipes/presentation/bloc/recipe_events.dart';
 import 'package:tadmon/layout/recipes/presentation/bloc/recipe_states.dart';
+import 'package:tadmon/layout/recipes/domain/entities/recipe.dart';
+
 
 class RecipeDetailScreen extends StatelessWidget {
-  var recipe;
+  final Recipe recipe;
 
-   RecipeDetailScreen({Key? key, required this.recipe}) : super(key: key);
+  RecipeDetailScreen({Key? key, required this.recipe}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return  Scaffold(
-        body: BlocProvider(
-        create: (context) => sl<RecipeBloc>()..add(FetchRecipesEvent()),
-    child: BlocBuilder<RecipeBloc, RecipeState>(
-    builder: (context, state) {
+    return Scaffold(
+      body: BlocProvider(
+        create: (context) => sl<RecipeBloc>()
+          ..add(FetchRecipesEvent())
+          ..add(LoadFavoriteStatusEvent(recipe)), // Dispatch the new event here
+        child: BlocBuilder<RecipeBloc, RecipeState>(
+          builder: (context, state) {
             switch (state.recipeRequestState) {
               case RequestState.loading:
                 return const SizedBox(
@@ -31,12 +34,27 @@ class RecipeDetailScreen extends StatelessWidget {
                 );
 
               case RequestState.loaded:
+                final isFavorite = state.favoriteStatus[recipe.id] ?? false;
+
                 return CustomScrollView(
                   key: const Key('recipeDetailScrollView'),
                   slivers: [
                     SliverAppBar(
                       pinned: true,
                       expandedHeight: 250.0,
+                      actions: [
+                        IconButton(
+                          icon: Icon(
+                            size: 50,
+                            isFavorite ? Icons.favorite : Icons.favorite_border,
+                            color: isFavorite ? Colors.red : Colors.white,
+                          ),
+                          onPressed: () {
+                            // Dispatch ToggleFavoriteEvent
+                            context.read<RecipeBloc>().add(ToggleFavoriteEvent(recipe));
+                          },
+                        ),
+                      ],
                       flexibleSpace: FlexibleSpaceBar(
                         background: FadeIn(
                           duration: const Duration(milliseconds: 500),
@@ -146,7 +164,7 @@ class RecipeDetailScreen extends StatelessWidget {
                               ),
                               const SizedBox(height: 8.0),
                               Text(
-                                'Ingredients: ${recipe!.ingredients.join(", ")}',
+                                'Ingredients: ${recipe.ingredients.join(", ")}',
                                 style: GoogleFonts.montserrat(
                                   color: Colors.black,
                                   fontSize: 12.0,
@@ -159,7 +177,7 @@ class RecipeDetailScreen extends StatelessWidget {
                         ),
                       ),
                     ),
-                    // Add more sections here, similar to 'More like this' in MovieDetailContent
+                    // Add more sections here if needed
                   ],
                 );
 
@@ -184,8 +202,11 @@ class RecipeDetailScreen extends StatelessWidget {
             }
           },
         ),
-        ),
+      ),
     );
   }
 }
+
+
+
 

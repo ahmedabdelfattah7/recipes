@@ -20,7 +20,7 @@ class RecipeListScreen extends StatelessWidget {
           style: GoogleFonts.montserrat(
             fontSize: 18,
             fontWeight: FontWeight.w600,
-            color: ColorCode.black8,
+            color: ColorCode.titleblack,
           ),
         ),
       ),
