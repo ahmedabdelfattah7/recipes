@@ -1,16 +1,21 @@
 # tadmon
 
-A new Flutter project.
+Recipe App Overview
+This Flutter Recipe App demonstrates user authentication, recipe fetching, and local storage using flutter_bloc for state management and Clean Architecture principles.
 
-## Getting Started
+Key Features
+User Login:
 
-This project is a starting point for a Flutter application.
+Simple login screen with hardcoded credentials (admin@example.com / password123) managed by RecipeLoginCubit.
+Password visibility toggle for better user experience.
+Recipe List with Favorites:
 
-A few resources to get you started if this is your first Flutter project:
+Fetches recipes from a remote API using Dio and displays them in a list.
+Users can mark recipes as favorites. Favorites are managed locally with sqflite.
+State Management with Bloc:
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+RecipeLoginCubit handles authentication states.
+RecipeBloc manages recipe fetching and favorite toggling.
+Clean Architecture:
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+Separates code into Data, Domain, and Presentation layers for maintainability.
